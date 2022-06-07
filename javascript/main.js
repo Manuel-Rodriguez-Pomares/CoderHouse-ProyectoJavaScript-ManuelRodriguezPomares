@@ -25,7 +25,6 @@ function addToCarritoItem(e){
   addItemCarrito(newItem)
 }
 
-
 function addItemCarrito(newItem){
 
   const alert = document.querySelector('.alert')
