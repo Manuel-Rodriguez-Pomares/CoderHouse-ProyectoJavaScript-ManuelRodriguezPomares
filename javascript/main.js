@@ -23,6 +23,7 @@ function addToCarritoItem(e){
   }
 
   addItemCarrito(newItem)
+ 
 }
 
 function addItemCarrito(newItem){
@@ -46,7 +47,7 @@ function addItemCarrito(newItem){
   }
 
   carrito.push(newItem)
-
+ 
   renderCarrito()
 } 
 
@@ -77,6 +78,19 @@ function renderCarrito(){
     tr.querySelector(".input__elemento").addEventListener('change', sumaCantidad)
   })
   CarritoTotal()
+  Toastify({
+    text: `Tenes ${carrito.length} productos en tu carrito `,
+    duration: 3000,
+    offset:{  
+      x:100,
+      y:100
+    },
+   
+    style: {
+      background: "linear-gradient(to right, #00b09b, #96c93d)",
+    },
+    
+  }).showToast();
 }
 
 function CarritoTotal(){
@@ -86,7 +100,7 @@ function CarritoTotal(){
     const precio = Number(item.precio.replace("$", ''))
     Total = Total + precio*item.cantidad
   })
-
+ 
   itemCartTotal.innerHTML = `Total $${Total}`
   addLocalStorage()
 }
@@ -121,7 +135,9 @@ function sumaCantidad(e){
     if(item.title.trim() === title){
       sumaInput.value < 1 ?  (sumaInput.value = 1) : sumaInput.value;
       item.cantidad = sumaInput.value;
+      
       CarritoTotal()
+      
     }
   })
 }
@@ -137,3 +153,10 @@ window.onload = function(){
     renderCarrito()
   }
 }
+
+
+
+
+
+
+/*  agregarle al storage un operador avanzado or */
