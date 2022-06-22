@@ -6,7 +6,7 @@ let carrito = []
 Clickbutton.forEach(btn => {
   btn.addEventListener('click', addToCarritoItem)
 })
-
+console.log(Clickbutton)
 
 function addToCarritoItem(e){
   const button = e.target
