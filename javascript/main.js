@@ -1,6 +1,7 @@
 const Clickbutton = document.querySelectorAll('.button')
 const tbody = document.querySelector('.tbody')
-let carrito = []
+
+
 
 Clickbutton.forEach(btn => {
   btn.addEventListener('click', addToCarritoItem)
@@ -47,7 +48,7 @@ function addItemCarrito(newItem){
   }
 
   carrito.push(newItem)
- 
+  
   renderCarrito()
 } 
 
@@ -82,8 +83,8 @@ function renderCarrito(){
     text: `Tenes ${carrito.length} productos en tu carrito `,
     duration: 3000,
     offset:{  
-      x:100,
-      y:100
+      x:50,
+      y:20
     },
    
     style: {
@@ -153,10 +154,6 @@ window.onload = function(){
     renderCarrito()
   }
 }
-
-
-
-
 
 
 /*  agregarle al storage un operador avanzado or */
