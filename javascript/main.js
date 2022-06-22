@@ -1,6 +1,6 @@
 const Clickbutton = document.querySelectorAll('.button')
 const tbody = document.querySelector('.tbody')
-
+let carrito = []
 
 
 Clickbutton.forEach(btn => {
@@ -155,5 +155,10 @@ window.onload = function(){
   }
 }
 
+fetch('https://my-json-server.typicode.com/Manuel-Rodriguez-Pomares/CoderHouse-ProyectoJavaScript-ManuelRodriguezPomares/lista')
+.then((response)=>response.json())
+.then((data)=>  {
+  carrito=data;
+})
 
 /*  agregarle al storage un operador avanzado or */
