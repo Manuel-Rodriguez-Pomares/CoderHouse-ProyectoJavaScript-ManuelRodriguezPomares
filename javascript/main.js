@@ -20,7 +20,7 @@ function addToCarritoItem(e){
     title: itemTitle,
     precio: itemPrice,
     img: itemImg,
-    cantidad: 1
+    cantidad: 0
   }
 
   addItemCarrito(newItem)
@@ -161,11 +161,6 @@ fetch('https://my-json-server.typicode.com/Manuel-Rodriguez-Pomares/CoderHouse-P
 
 }) 
 
- function InitCart(){
-  for (const value of data) {
-  value
-  }
-} 
+
 
 /*  agregarle al storage un operador avanzado or */
-s
