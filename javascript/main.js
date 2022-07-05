@@ -1,6 +1,6 @@
 const Clickbutton = document.querySelectorAll('.button')
 const tbody = document.querySelector('.tbody')
-let carrito = [];
+
 
 
 Clickbutton.forEach(btn => {
@@ -20,7 +20,7 @@ function addToCarritoItem(e){
     title: itemTitle,
     precio: itemPrice,
     img: itemImg,
-    cantidad: 0
+    cantidad: 1
   }
 
   addItemCarrito(newItem)
@@ -158,8 +158,9 @@ window.onload = function(){
 fetch('https://my-json-server.typicode.com/Manuel-Rodriguez-Pomares/CoderHouse-ProyectoJavaScript-ManuelRodriguezPomares/lista')
 .then((response)=>response.json())
 .then((data)=>{
-   data = carrito
-   console.log(carrito)
+   
+  let carrito = data;
+  
 }) 
 
 
