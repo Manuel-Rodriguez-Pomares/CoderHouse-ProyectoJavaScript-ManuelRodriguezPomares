@@ -157,8 +157,15 @@ window.onload = function(){
 
 fetch('https://my-json-server.typicode.com/Manuel-Rodriguez-Pomares/CoderHouse-ProyectoJavaScript-ManuelRodriguezPomares/lista')
 .then((response)=>response.json())
-.then((data)=>  {
-  carrito=data;
-})
+.then((data)=>{
+
+}) 
+
+ function InitCart(){
+  for (const value of data) {
+  value
+  }
+} 
 
 /*  agregarle al storage un operador avanzado or */
+s
