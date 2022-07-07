@@ -1,33 +1,11 @@
 const Clickbutton = document.querySelectorAll('.button')
 const tbody = document.querySelector('.tbody')
+const menuCombos = document.querySelector('.combos')
+let carritoSecundario = []
 
-
-
-Clickbutton.forEach(btn => {
-  btn.addEventListener('click', addToCarritoItem)
-})
-
-
-function addToCarritoItem(e){
-  const button = e.target
-  const item = button.closest('.card')
-  const itemTitle = item.querySelector('.card-title').textContent;
-  const itemPrice = item.querySelector('.precio').textContent;
-  const itemImg = item.querySelector('.card-img-top').src;
- 
-
-  const newItem = {
-    title: itemTitle,
-    precio: itemPrice,
-    img: itemImg,
-    cantidad: 1
-  }
-
-  addItemCarrito(newItem)
- 
-}
-
-function addItemCarrito(newItem){
+/* Funciones para el carrito */
+function addItemCarrito(newItem)
+{
 
   const alert = document.querySelector('.alert')
 
@@ -37,9 +15,9 @@ function addItemCarrito(newItem){
     alert.classList.remove('hide')
 
   const InputElemnto = tbody.getElementsByClassName('input__elemento')
-  for(let i =0; i < carrito.length ; i++){
-    if(carrito[i].title.trim() === newItem.title.trim()){
-      carrito[i].cantidad ++;
+  for(let i =0; i <  carritoSecundario.length ; i++){
+    if( carritoSecundario[i].title.trim() === newItem.title.trim()){
+      carritoSecundario[i].cantidad ++;
       const inputValue = InputElemnto[i]
       inputValue.value++;
       CarritoTotal()
@@ -47,15 +25,17 @@ function addItemCarrito(newItem){
     }
   }
 
-  carrito.push(newItem)
+  carritoSecundario.push(newItem)
   
   renderCarrito()
 } 
 
 
-function renderCarrito(){
+function renderCarrito()
+{
+  console.log(carritoSecundario)
   tbody.innerHTML = ''
-  carrito.map(item => {
+  carritoSecundario.map(item => {
     const tr = document.createElement('tr')
     tr.classList.add('ItemCarrito')
     const Content = `
@@ -80,7 +60,7 @@ function renderCarrito(){
   })
   CarritoTotal()
   Toastify({
-    text: `Tenes ${carrito.length} productos en tu carrito `,
+    text: `Tenes ${ carritoSecundario.length} productos en tu carrito `,
     duration: 3000,
     offset:{  
       x:50,
@@ -94,10 +74,12 @@ function renderCarrito(){
   }).showToast();
 }
 
-function CarritoTotal(){
+function CarritoTotal()
+{
+  debugger;
   let Total = 0;
   const itemCartTotal = document.querySelector('.itemCartTotal')
-  carrito.forEach((item) => {
+  carritoSecundario.forEach((item) => {
     const precio = Number(item.precio.replace("$", ''))
     Total = Total + precio*item.cantidad
   })
@@ -106,14 +88,16 @@ function CarritoTotal(){
   addLocalStorage()
 }
 
-function removeItemCarrito(e){
+function removeItemCarrito(e)
+{
   const buttonDelete = e.target
   const tr = buttonDelete.closest(".ItemCarrito")
   const title = tr.querySelector('.title').textContent;
-  for(let i=0; i<carrito.length ; i++){
+  for(let i=0; i< carritoSecundario.length ; i++){
 
-    if(carrito[i].title.trim() === title.trim()){
-      carrito.splice(i, 1)
+    if( carritoSecundario[i].title.trim() === title.trim())
+    {
+      carritoSecundario.splice(i, 1)
     }
   }
 
@@ -128,7 +112,8 @@ function removeItemCarrito(e){
   CarritoTotal()
 }
 
-function sumaCantidad(e){
+function sumaCantidad(e)
+{
   const sumaInput  = e.target
   const tr = sumaInput.closest(".ItemCarrito")
   const title = tr.querySelector('.title').textContent;
@@ -143,26 +128,109 @@ function sumaCantidad(e){
   })
 }
 
-function addLocalStorage(){
-  localStorage.setItem('carrito', JSON.stringify(carrito))
+function addLocalStorage()
+{
+  localStorage.setItem('carritoSecundario', JSON.stringify( carritoSecundario))
 }
 
-window.onload = function(){
-  const storage = JSON.parse(localStorage.getItem('carrito'));
+window.onload = function()
+{
+  const storage = JSON.parse(localStorage.getItem('carritoSecundario'));
   if(storage){
-    carrito = storage;
+    carritoSecundario = storage;
     renderCarrito()
   }
 }
 
-fetch('https://my-json-server.typicode.com/Manuel-Rodriguez-Pomares/CoderHouse-ProyectoJavaScript-ManuelRodriguezPomares/lista')
-.then((response)=>response.json())
-.then((data)=>{
-   
-  let carrito = data;
-  
-}) 
+const getProducts = async () => 
+{
+  try
+  {
+    const response = await fetch(
+    "https://my-json-server.typicode.com/Manuel-Rodriguez-Pomares/CoderHouse-ProyectoJavaScript-ManuelRodriguezPomares/lista"
+    );
+
+    const data = await response.json()
+    let carrito = data;
+    renderMenu(carrito);
+    
+  }
+  catch (error)
+  {
+    console.log("getProducts error: " + error);
+  }
+} 
+getProducts()
 
 
 
-/*  agregarle al storage un operador avanzado or */
+/* Renderizar los productos en el inicio */
+
+function renderMenu(combos) 
+{
+  combos.map((combo) => {
+    let comboItem = document.createElement("div");
+    let cardItem = document.createElement("div");
+    let title = document.createElement("h5");
+    let img = document.createElement("img");
+    let cardBody = document.createElement("div");
+    let description = document.createElement("p");
+    let price = document.createElement("h5");
+    let containerButton = document.createElement("div");
+    let btn = document.createElement("button");
+
+    comboItem.classList = "col d-flex justify-content-center mb-4";
+
+    cardItem.classList = "card shadow mb-1 bg-dark rounded";
+    cardItem.style = "width: 20rem;";
+
+    title.classList = "card-title pt-2 text-center text-primary";
+    title.textContent = combo.title;
+
+    img.classList = "card-img-top";
+    img.src = combo.img;
+    img.alt = combo.title;
+
+    cardBody.className = "card-body";
+
+    description.classList = "card-text text-white-50 description";
+    description.textContent = combo.description;
+
+    price.classList = "text-primary";
+    price.innerHTML = `Precio: <span class="precio">${combo.precio}</span>`;
+
+    containerButton.classList = "d-grid gap-2";
+
+    btn.classList = "btn btn-primary button";
+    btn.textContent = "Añadir a Carrito";
+    btn.addEventListener("click", (e) => {
+      boton = e.target
+      item = boton.closest('.card')
+      const itemTitle = item.querySelector('.card-title').textContent;
+      const itemPrice = item.querySelector('.precio').textContent;
+      const itemImg = item.querySelector('.card-img-top').src; 
+      const newItem = {
+        title: itemTitle,
+        precio: itemPrice,
+        img: itemImg,
+        cantidad: 1
+      }
+    
+      addItemCarrito(newItem)
+      
+      
+    });
+
+    containerButton.append(btn);
+    cardBody.append(description);
+    cardBody.append(price);
+    cardBody.append(containerButton);
+    cardItem.append(title);
+    cardItem.append(img);
+    cardItem.append(cardBody);
+    comboItem.append(cardItem);
+
+    menuCombos.appendChild(comboItem);
+  });
+}
+
