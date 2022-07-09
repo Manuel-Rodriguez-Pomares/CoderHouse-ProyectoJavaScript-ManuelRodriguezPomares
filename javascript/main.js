@@ -1,4 +1,5 @@
 const Clickbutton = document.querySelectorAll('.button')
+const botonFinalizar = document.querySelector('.btn-success')
 const tbody = document.querySelector('.tbody')
 const menuCombos = document.querySelector('.combos')
 let carritoSecundario = []
@@ -76,7 +77,6 @@ function renderCarrito()
 
 function CarritoTotal()
 {
-  debugger;
   let Total = 0;
   const itemCartTotal = document.querySelector('.itemCartTotal')
   carritoSecundario.forEach((item) => {
@@ -117,10 +117,11 @@ function sumaCantidad(e)
   const sumaInput  = e.target
   const tr = sumaInput.closest(".ItemCarrito")
   const title = tr.querySelector('.title').textContent;
-  carrito.forEach(item => {
+  carritoSecundario.forEach(item => {
     if(item.title.trim() === title){
       sumaInput.value < 1 ?  (sumaInput.value = 1) : sumaInput.value;
       item.cantidad = sumaInput.value;
+      
       
       CarritoTotal()
       
@@ -234,3 +235,13 @@ function renderMenu(combos)
   });
 }
 
+function CompraFinalizada(){
+  Swal.fire(
+    'La compra se a realizado con exito',
+    'Muchas gracias',
+    'success'
+  )
+}
+
+
+botonFinalizar.addEventListener('click',CompraFinalizada);
